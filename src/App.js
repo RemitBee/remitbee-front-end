@@ -11,6 +11,7 @@ import AdminRegister from "./components/AdminRegister";
 import AdminSignIn from "./components/AdminSignIn";
 import StorePage from "./components/StorePage";
 import CurrencyConverter from "./components/CurrencyConverter";
+import Map from "./components/map";
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
           <Route exact path='/'>
             {/*<Home/>*/}
             {/*<AdminRegister/>*/}
-              <AdminSignIn/>
-              {/*<StorePage/>*/}
+              {/* <AdminSignIn/> */}
+              {/* <StorePage/> */}
+              <Map/>
             {/*  <CurrencyConverter/>*/}
           </Route>
           {/*<Route exact path='/reader/signin'>*/}

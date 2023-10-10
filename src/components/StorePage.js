@@ -100,7 +100,7 @@ function AdminRegister(props) {
                         {errors.name && <p className="small-font" style={{color: "red"}}>{errors.email}</p>}
 
                         <label>Currency</label>
-                        <input id="txtPassword" type="password" className="form-control mb-2" name="password"
+                        <input id="txtPassword" type="text" className="form-control mb-2" name="password"
                                value={data.password} onChange={handleInput}></input>
                         {errors.name && <p className="small-font" style={{color: "red"}}>{errors.password}</p>}
 
@@ -109,7 +109,7 @@ function AdminRegister(props) {
                        </div>
 
                         <label>Rate</label>
-                        <input id="txtConfirmPassword" type="password" className="form-control mb-2"
+                        <input id="txtConfirmPassword" type="text" className="form-control mb-2"
                                name="confirmPassword" value={data.confirmPassword} onChange={handleInput}></input>
                         {errors.name && <p className="small-font" style={{color: "red"}}>{errors.confirmPassword}</p>}
 
