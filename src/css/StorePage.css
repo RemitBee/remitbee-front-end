@@ -1,0 +1,16 @@
+.currency-converter {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Create two equally sized columns */
+    gap: 10px; /* Adjust the gap between the columns as needed */
+}
+
+.box1 {
+    background-color: #f0f0f0; /* Optional styling */
+    padding: 15px; /* Optional styling */
+    margin: 10px;
+}
+
+.box2 {
+    background-color: #ccc; /* Optional styling */
+    padding: 10px; /* Optional styling */
+}

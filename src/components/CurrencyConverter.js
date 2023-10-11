@@ -1,86 +1,63 @@
-import { useEffect, useState } from 'react';
-import Axios from 'axios';
-import Dropdown from 'react-dropdown';
-import { HiSwitchHorizontal } from 'react-icons/hi';
-import 'react-dropdown/style.css';
-import '../css/CurrencyConverter.css';
+import React, { useState, useEffect } from 'react';
 
-function CurrencyCovert() {
+function CurrencyConvert() {
+    const [currencies, setCurrencies] = useState([]);
+    const [baseCurrency, setBaseCurrency] = useState('USD');
+    const [exchangeRates, setExchangeRates] = useState({});
+    const [amount, setAmount] = useState(1);
 
-    // Initializing all the state variables
-    const [info, setInfo] = useState([]);
-    const [input, setInput] = useState(0);
-    const [from, setFrom] = useState("usd");
-    const [to, setTo] = useState("inr");
-    const [options, setOptions] = useState([]);
-    const [output, setOutput] = useState(0);
-
-    // Calling the api whenever the dependency changes
     useEffect(() => {
-        Axios.get(
-            `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${from}.json`)
-            .then((res) => {
-                setInfo(res.data[from]);
+        // Replace 'YOUR_API_KEY' with your actual API key
+        const API_KEY = 'https://api.exchangeratesapi.io/latest?base=USD&symbols=EUR';
+        const API_URL = `https://open.er-api.com/v6/latest/${baseCurrency}.json?apikey=${API_KEY}`;
+
+        fetch(API_URL)
+            .then((response) => response.json())
+            .then((data) => {
+                const rates = data.rates;
+                setCurrencies([baseCurrency, ...Object.keys(rates)]);
+                setExchangeRates(rates);
             })
-    }, [from]);
+            .catch((error) => {
+                console.error('Error fetching exchange rates:', error);
+            });
+    }, [baseCurrency]);
 
-    // Calling the convert function whenever
-    // a user switches the currency
-    useEffect(() => {
-        setOptions(Object.keys(info));
-        convert();
-    }, [info])
+    const handleCurrencyChange = (event) => {
+        setBaseCurrency(event.target.value);
+    };
 
-    // Function to convert the currency
-    function convert() {
-        var rate = info[to];
-        setOutput(input * rate);
-    }
-
-    // Function to switch between two currency
-    function flip() {
-        var temp = from;
-        setFrom(to);
-        setTo(temp);
-    }
+    const handleAmountChange = (event) => {
+        setAmount(event.target.value);
+    };
 
     return (
-        <div className="App">
-            <div className="heading">
-                <h1>Currency converter</h1>
+        <div>
+            <div>
+                <label>Select Currency:</label>
+                <select onChange={handleCurrencyChange} value={baseCurrency}>
+                    {currencies.map((currency) => (
+                        <option key={currency} value={currency}>
+                            {currency}
+                        </option>
+                    ))}
+                </select>
             </div>
-            <div className="container">
-                <div className="left">
-                    <h3>Amount</h3>
-                    <input type="text"
-                           placeholder="Enter the amount"
-                           onChange={(e) => setInput(e.target.value)} />
-                </div>
-                <div className="middle">
-                    <h3>From</h3>
-                    <Dropdown options={options}
-                              onChange={(e) => { setFrom(e.value) }}
-                              value={from} placeholder="From" />
-                </div>
-                <div className="switch">
-                    <HiSwitchHorizontal size="30px"
-                                        onClick={() => { flip() }} />
-                </div>
-                <div className="right">
-                    <h3>To</h3>
-                    <Dropdown options={options}
-                              onChange={(e) => { setTo(e.value) }}
-                              value={to} placeholder="To" />
-                </div>
+            <div>
+                <label>Amount:</label>
+                <input type="number" value={amount} onChange={handleAmountChange} />
             </div>
-            <div className="result">
-                <button onClick={() => { convert() }}>Convert</button>
-                <h2>Converted Amount:</h2>
-                <p>{input + " " + from + " = " + output.toFixed(2) + " " + to}</p>
-
+            <div>
+                <ul>
+                    {currencies.map((currency) => (
+                        <li key={currency}>
+                            {currency}: {amount * exchangeRates[currency]}
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     );
 }
 
-export default CurrencyCovert;
+export default CurrencyConvert;

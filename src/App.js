@@ -1,16 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './css/style.css';
-// import Home from './components/Home';
-// import AdminHome from './components/AdminHome';
-// import UserHome from './components/UserHome';
-// import CustomerSignin from './components/CustomerSignin';
-// import CustomerSignup from './components/CustomerSignup';
-// import AdminSignIn from './components/AdminSignIn';
-// import AdminSignUp from './components/AdminSignUp';
-import AdminRegister from "./components/AdminRegister";
-import AdminSignIn from "./components/AdminSignIn";
-import StorePage from "./components/StorePage";
-import CurrencyConverter from "./components/CurrencyConverter";
+import SearchCurrency from './components/SearchCurrency';
 
 function App() {
   return (
@@ -19,10 +9,13 @@ function App() {
         <Switch>
           <Route exact path='/'>
             {/*<Home/>*/}
-            {/*<AdminRegister/>*/}
-              <AdminSignIn/>
-              {/*<StorePage/>*/}
+            {/* <AdminRegister/>*/}
+            {/*  <AdminSignIn/>*/}
+            {/*  <StorePage/>*/}
             {/*  <CurrencyConverter/>*/}
+            {/*  <MapLocation/>*/}
+            {/*<ForgetPassword/>*/}
+              <SearchCurrency/>
           </Route>
           {/*<Route exact path='/reader/signin'>*/}
           {/*  <AdminSignIn/>*/}

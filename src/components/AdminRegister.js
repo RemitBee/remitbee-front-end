@@ -31,9 +31,9 @@ function AdminRegister(props) {
         try{
             const adminData = {
                 firstName:data.adminName,
-                email:data.adminEmail,
                 phone:data.adminContact,
                 nic:data.adminNic,
+                email:data.adminEmail,
                 password:data.adminPassword
             };
 

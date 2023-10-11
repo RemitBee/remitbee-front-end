@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import '../css/StorePage.css'
 import {ValidationAdminRegistration} from "../common/Validation";
 import Axios from "axios";
 import Swal from "sweetalert2";
@@ -6,13 +7,15 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function AdminRegister(props) {
     const [data,setData] = useState({
-        name:'',
-        address:'',
-        town:'',
-        locationUrl:'',
+        shopName:'',
+        shopAddress:'',
+        shopTown:'',
+        shopLocationUrl:'',
+        currencyTypes:'',
         currencyRate:''
     });
 
+    const [selectedCurrency, setSelectedCurrency] = useState('USD');
     const [errors,setErrors] = useState({});
 
     const handleInput = (e)=>{
@@ -29,11 +32,12 @@ function AdminRegister(props) {
     const saveData = async()=>{
         try{
             const adminShopData = {
-                name:data.name,
-                address:data.address,
-                town:data.town,
-                locationUrl:data.locationUrl,
-                currencyRate:data.currencyRate
+                name:data.shopName,
+                address:data.shopAddress,
+                town:data.shopTown,
+                locationUrl:data.shopLocationUrl,
+                currency:data.currencyTypes,
+                rate:data.currencyRate
             };
 
             handleValidation();
@@ -78,40 +82,54 @@ function AdminRegister(props) {
             <div className="d-flex justify-content-center align-items-center">
                 <div className="card w-75 mb-3 border-5">
                     <div className="card-body p-5">
-                        <h1 className="card-title text-center fw-bold" style={{ fontWeight: 'bold', color: 'blue' }}>Add Store</h1>
+                        <h1 className="card-title text-center fw-bold" style={{ fontWeight: 'bold', color: 'blue' }}>Add Store Details</h1>
                         <label>Shop Name</label>
-                        <input id="txtName" type="text" className="form-control mb-2" name="name" value={data.name}
+                        <input id="txtName" type="text" className="form-control mb-2" name="name" value={data.shopName}
                                onChange={handleInput}></input>
-                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.name}</p>}
+                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.shopName}</p>}
 
                         <label>Address</label>
-                        <input id="txtEmployeeNumber" type="text" className="form-control mb-2" name="employeeNumber"
-                               value={data.nic} onChange={handleInput}></input>
-                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.nic}</p>}
+                        <input id="txtEmployeeNumber" type="text" className="form-control mb-2" name="address"
+                               value={data.shopAddress} onChange={handleInput}></input>
+                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.shopAddress}</p>}
 
                         <label>Town </label>
-                        <input id="txtTown" type="text" className="form-control mb-2" name="town" value={data.town}
+                        <input id="txtTown" type="text" className="form-control mb-2" name="town" value={data.shopTown}
                                onChange={handleInput}></input>
-                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.contact}</p>}
+                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.shopTown}</p>}
 
                         <label>Select Location</label>
-                        <input id="txtEmail" type="text" className="form-control mb-2" name="email" value={data.email}
+                        <input id="txtEmail" type="text" className="form-control mb-2" name="location" value={data.shopLocationUrl}
                                onChange={handleInput}></input>
-                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.email}</p>}
+                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.shopLocationUrl}</p>}
 
-                        <label>Currency</label>
-                        <input id="txtPassword" type="password" className="form-control mb-2" name="password"
-                               value={data.password} onChange={handleInput}></input>
-                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.password}</p>}
 
-                       <div>
+                        <div>
+                            {/*<label>Currency</label>
+                            <input id="txtPassword" type="password" className="form-control mb-2" name="password"
+                                   value={data.password} onChange={handleInput}></input>
+                            {errors.name && <p className="small-font" style={{color: "red"}}>{errors.password}</p>}*/}
+
+                            <div className="currency-converter" >
+                                <div><label>Select Currency:</label></div>
+                                <div>
+                                    <select
+                                        value={data.currencyTypes}
+                                        onChange={(e) => setSelectedCurrency(e.target.value)}
+                                    >
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="GBP">GBP</option>
+                                    </select>
+                                </div>
+                            </div>
 
                        </div>
 
                         <label>Rate</label>
-                        <input id="txtConfirmPassword" type="password" className="form-control mb-2"
-                               name="confirmPassword" value={data.confirmPassword} onChange={handleInput}></input>
-                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.confirmPassword}</p>}
+                        <input id="number" type="number" className="form-control mb-2"
+                               name="confirmPassword" value={data.currencyRate} onChange={handleInput}></input>
+                        {errors.name && <p className="small-font" style={{color: "red"}}>{errors.currencyRate}</p>}
 
                         <div className="d-flex justify-content-center align-items-center mb-3">
                             <a href="#" onClick={saveData} className="btn btn-primary">Submit</a>

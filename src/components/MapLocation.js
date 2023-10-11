@@ -1,25 +1,45 @@
-import React from 'react';
-import { GoogleMap, Marker } from 'react-google-maps';
+import React, { Component } from 'react';
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
-const SelectedLocation = () => {
-    const [selectedLocation, setSelectedLocation] = React.useState({
-        lat: 37.78825,
-        lng: -122.4324,
-    });
+class MapLocation extends Component {
+    // ... (constructor and other code)
 
-    const handleMapClick = (event) => {
-        setSelectedLocation(event.latLng);
+    // Function to get the user's current location
+    getCurrentLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const { latitude, longitude } = position.coords;
+                console.log('Current Location:', latitude, longitude);
+
+                // You can do something with the location data here, such as setting it in the state.
+                this.setState({
+                    selectedLocation: {
+                        lat: latitude,
+                        lng: longitude,
+                    },
+                });
+            });
+        } else {
+            console.error('Geolocation is not supported by your browser.');
+        }
     };
 
-    return (
-        <div>
-            <GoogleMap
-                center={selectedLocation}
-                zoom={15}
-                onClick={handleMapClick}
-            >
-                <Marker position={selectedLocation} />
-            </GoogleMap>
-        </div>
-    );
-};
+    // ... (render and other code)
+
+    render() {
+        const { google } = this.props;
+        const { selectedLocation } = this.state;
+
+        return (
+            <div>
+                {/* ... (other components) */}
+                <button onClick={this.getCurrentLocation}>Get Current Location</button>
+                {/* ... (other components) */}
+            </div>
+        );
+    }
+}
+
+export default GoogleApiWrapper({
+    apiKey: 'YOUR_API_KEY_HERE',
+})(MapLocation);
